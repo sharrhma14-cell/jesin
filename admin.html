@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Jesin Food</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="admin-page">
+    <div class="admin-shell">
+      <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+          <h2>Jesin Admin</h2>
+          <p>Manajemen website profesional</p>
+        </div>
+        <nav class="sidebar-nav">
+          <button class="sidebar-link active" data-section="dashboard" type="button">Dashboard</button>
+          <button class="sidebar-link" data-section="products" type="button">Manajemen Produk</button>
+          <button class="sidebar-link" data-section="profile" type="button">Profil Usaha</button>
+          <button class="sidebar-link" data-section="socials" type="button">Sosial & Kontak</button>
+          <button class="sidebar-link" data-section="gallery" type="button">Galeri</button>
+          <button class="sidebar-link" data-section="testimonials" type="button">Testimoni</button>
+          <button class="sidebar-link" data-section="faq" type="button">FAQ</button>
+          <button class="sidebar-link" data-section="banner" type="button">Banner & Promo</button>
+          <button class="sidebar-link" data-section="settings" type="button">Pengaturan</button>
+        </nav>
+        <a class="btn btn-secondary sidebar-preview" href="index.html" target="_blank" rel="noopener noreferrer">Lihat Website</a>
+      </aside>
+
+      <div class="admin-main">
+        <header class="admin-header">
+          <div>
+            <p class="eyebrow">Panel Admin</p>
+            <h1>Jesin Food Admin</h1>
+          </div>
+          <button id="logout-btn" class="btn btn-secondary hidden" type="button">Logout</button>
+        </header>
+
+        <section id="login-panel" class="auth-card">
+          <h2>Login Admin</h2>
+          <form id="login-form">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" required />
+
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password" required />
+
+            <button class="btn btn-primary" type="submit">Masuk</button>
+          </form>
+        </section>
+
+        <section id="admin-panel" class="hidden">
+          <div id="dashboard-view" class="admin-view">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <p>Jumlah Produk</p>
+                <h3 id="stat-total-products">0</h3>
+              </div>
+              <div class="stat-card">
+                <p>Produk Unggulan</p>
+                <h3 id="stat-featured-products">0</h3>
+              </div>
+              <div class="stat-card">
+                <p>Produk PO</p>
+                <h3 id="stat-po-products">0</h3>
+              </div>
+              <div class="stat-card">
+                <p>Jumlah Klik WhatsApp</p>
+                <h3 id="stat-whatsapp-clicks">0</h3>
+              </div>
+            </div>
+            <div class="dashboard-grid admin-grid">
+              <div class="card">
+                <h3>Statistik Sederhana</h3>
+                <div id="stats-summary" class="summary-list"></div>
+              </div>
+              <div class="card">
+                <h3>Produk Paling Sering Dilihat</h3>
+                <div id="most-viewed-product" class="summary-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="products-view" class="admin-view hidden">
+            <div class="admin-grid">
+              <div class="card">
+                <h3 id="form-title">Tambah Produk</h3>
+                <form id="product-form">
+                  <label for="product-name">Nama Produk</label>
+                  <input id="product-name" name="name" type="text" required />
+
+                  <label for="product-price">Harga</label>
+                  <input id="product-price" name="price" type="text" required />
+
+                  <label for="product-weight">Berat / Satuan</label>
+                  <input id="product-weight" name="weight" type="text" placeholder="Contoh: 100 gram" />
+
+                  <label for="product-description">Deskripsi</label>
+                  <textarea id="product-description" name="description" rows="4" required></textarea>
+
+                  <label for="product-image">URL Gambar Produk</label>
+                  <input id="product-image" name="image" type="text" placeholder="Masukkan URL gambar" />
+
+                  <label for="product-image-file">Upload Foto Produk</label>
+                  <input id="product-image-file" name="imageFile" type="file" accept="image/*" />
+
+                  <label for="product-category">Kategori</label>
+                  <select id="product-category" name="category">
+                    <option value="Produk Unggulan">Produk Unggulan</option>
+                    <option value="Produk PO">Produk PO</option>
+                  </select>
+
+                  <label for="product-status">Status</label>
+                  <select id="product-status" name="status">
+                    <option value="Tersedia">Tersedia</option>
+                    <option value="Habis">Habis</option>
+                    <option value="PO">PO</option>
+                    <option value="Unggulan">Unggulan</option>
+                  </select>
+
+                  <label class="checkbox-row">
+                    <input id="product-featured" name="featured" type="checkbox" />
+                    Jadikan produk unggulan
+                  </label>
+
+                  <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Simpan</button>
+                    <button id="cancel-edit" class="btn btn-secondary" type="button">Batal</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="card">
+                <h3>Daftar Produk</h3>
+                <div id="admin-product-list" class="admin-product-list"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="profile-view" class="admin-view hidden">
+            <div class="admin-grid">
+              <div class="card">
+                <h3>Profil Usaha</h3>
+                <form id="profile-form">
+                  <label for="business-name">Nama usaha</label>
+                  <input id="business-name" name="businessName" type="text" />
+
+                  <label for="business-logo">Logo usaha (URL)</label>
+                  <input id="business-logo" name="logo" type="text" placeholder="URL logo" />
+                  <input id="business-logo-file" type="file" accept="image/*" />
+
+                  <label for="business-hero">Foto banner/hero (URL)</label>
+                  <input id="business-hero" name="heroImage" type="text" placeholder="URL hero image" />
+                  <input id="business-hero-file" type="file" accept="image/*" />
+
+                  <label for="business-description">Deskripsi usaha</label>
+                  <textarea id="business-description" name="description" rows="3"></textarea>
+
+                  <label for="business-story">Cerita usaha</label>
+                  <textarea id="business-story" name="story" rows="3"></textarea>
+
+                  <label for="business-vision">Visi</label>
+                  <textarea id="business-vision" name="vision" rows="2"></textarea>
+
+                  <label for="business-mission">Misi</label>
+                  <textarea id="business-mission" name="mission" rows="2"></textarea>
+
+                  <label for="business-address">Alamat usaha</label>
+                  <textarea id="business-address" name="address" rows="2"></textarea>
+
+                  <label for="business-founded">Tahun berdiri</label>
+                  <input id="business-founded" name="foundedYear" type="text" />
+
+                  <label for="business-hours">Jam operasional</label>
+                  <input id="business-hours" name="hours" type="text" />
+
+                  <button class="btn btn-primary" type="submit">Simpan Profil</button>
+                </form>
+              </div>
+              <div class="card">
+                <h3>Preview Profil</h3>
+                <div id="profile-preview" class="preview-card"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="socials-view" class="admin-view hidden">
+            <div class="admin-grid">
+              <div class="card">
+                <h3>Kontak & Media Sosial</h3>
+                <form id="social-form">
+                  <label for="social-whatsapp">Nomor WhatsApp</label>
+                  <input id="social-whatsapp" name="whatsapp" type="text" />
+
+                  <label for="social-instagram">Instagram</label>
+                  <input id="social-instagram" name="instagram" type="text" />
+
+                  <label for="social-tiktok">TikTok</label>
+                  <input id="social-tiktok" name="tiktok" type="text" />
+
+                  <label for="social-facebook">Facebook</label>
+                  <input id="social-facebook" name="facebook" type="text" />
+
+                  <label for="social-email">Email</label>
+                  <input id="social-email" name="email" type="email" />
+
+                  <label for="social-maps">Link Google Maps</label>
+                  <input id="social-maps" name="mapsLink" type="text" />
+
+                  <button class="btn btn-primary" type="submit">Simpan Kontak</button>
+                </form>
+              </div>
+              <div class="card">
+                <h3>Preview Kontak</h3>
+                <div id="social-preview" class="preview-card"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="gallery-view" class="admin-view hidden">
+            <div class="card">
+              <h3>Manajemen Galeri</h3>
+              <form id="gallery-form">
+                <label for="gallery-title">Judul</label>
+                <input id="gallery-title" name="title" type="text" />
+
+                <label for="gallery-type">Jenis</label>
+                <select id="gallery-type" name="type">
+                  <option value="photo">Foto</option>
+                  <option value="video">Video</option>
+                </select>
+
+                <label for="gallery-url">URL Gambar / Video</label>
+                <input id="gallery-url" name="url" type="text" />
+
+                <label for="gallery-file">Upload File</label>
+                <input id="gallery-file" name="file" type="file" accept="image/*,video/*" />
+
+                <button class="btn btn-primary" type="submit">Tambah Item</button>
+              </form>
+              <div id="gallery-list" class="admin-product-list"></div>
+            </div>
+          </div>
+
+          <div id="testimonials-view" class="admin-view hidden">
+            <div class="card">
+              <h3>Manajemen Testimoni</h3>
+              <form id="testimonial-form">
+                <label for="testimonial-name">Nama</label>
+                <input id="testimonial-name" name="name" type="text" />
+
+                <label for="testimonial-role">Peran / Jabatan</label>
+                <input id="testimonial-role" name="role" type="text" />
+
+                <label for="testimonial-comment">Komentar</label>
+                <textarea id="testimonial-comment" name="comment" rows="3"></textarea>
+
+                <label for="testimonial-rating">Rating</label>
+                <input id="testimonial-rating" name="rating" type="number" min="1" max="5" />
+
+                <label for="testimonial-image">Foto pelanggan (URL)</label>
+                <input id="testimonial-image" name="image" type="text" />
+                <input id="testimonial-image-file" type="file" accept="image/*" />
+
+                <button class="btn btn-primary" type="submit">Tambah Testimoni</button>
+              </form>
+              <div id="testimonial-list" class="admin-product-list"></div>
+            </div>
+          </div>
+
+          <div id="faq-view" class="admin-view hidden">
+            <div class="card">
+              <h3>Manajemen FAQ</h3>
+              <form id="faq-form">
+                <label for="faq-question">Pertanyaan</label>
+                <input id="faq-question" name="question" type="text" />
+
+                <label for="faq-answer">Jawaban</label>
+                <textarea id="faq-answer" name="answer" rows="3"></textarea>
+
+                <button class="btn btn-primary" type="submit">Simpan FAQ</button>
+              </form>
+              <div id="faq-list" class="admin-product-list"></div>
+            </div>
+          </div>
+
+          <div id="banner-view" class="admin-view hidden">
+            <div class="admin-grid">
+              <div class="card">
+                <h3>Banner & Promo</h3>
+                <form id="banner-form">
+                  <label for="banner-title">Judul hero</label>
+                  <input id="banner-title" name="heroTitle" type="text" />
+
+                  <label for="banner-description">Deskripsi hero</label>
+                  <textarea id="banner-description" name="heroDescription" rows="3"></textarea>
+
+                  <label for="banner-image">URL hero image</label>
+                  <input id="banner-image" name="heroImage" type="text" />
+                  <input id="banner-image-file" type="file" accept="image/*" />
+
+                  <label for="promo-title">Judul promo</label>
+                  <input id="promo-title" name="promoTitle" type="text" />
+
+                  <label for="promo-text">Teks promo</label>
+                  <textarea id="promo-text" name="promoText" rows="3"></textarea>
+
+                  <label for="promo-button">Teks tombol promo</label>
+                  <input id="promo-button" name="promoButtonText" type="text" />
+
+                  <label for="recommended-product">Produk rekomendasi</label>
+                  <select id="recommended-product" name="recommendedProduct"></select>
+
+                  <button class="btn btn-primary" type="submit">Simpan Banner</button>
+                </form>
+              </div>
+              <div class="card">
+                <h3>Preview Banner</h3>
+                <div id="banner-preview" class="preview-card"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="settings-view" class="admin-view hidden">
+            <div class="admin-grid">
+              <div class="card">
+                <h3>Pengaturan Website</h3>
+                <form id="settings-form">
+                  <label for="site-title">Judul website</label>
+                  <input id="site-title" name="siteTitle" type="text" />
+
+                  <label for="theme-color">Warna tema</label>
+                  <input id="theme-color" name="themeColor" type="color" />
+
+                  <label for="favicon-url">URL favicon</label>
+                  <input id="favicon-url" name="favicon" type="text" />
+                  <input id="favicon-file" type="file" accept="image/*" />
+
+                  <label for="seo-description">SEO description</label>
+                  <textarea id="seo-description" name="seoDescription" rows="3"></textarea>
+
+                  <button class="btn btn-primary" type="submit">Simpan Pengaturan</button>
+                </form>
+              </div>
+              <div class="card">
+                <h3>Preview Pengaturan</h3>
+                <div id="settings-preview" class="preview-card"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
